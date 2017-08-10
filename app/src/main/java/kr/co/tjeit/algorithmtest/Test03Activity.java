@@ -77,6 +77,7 @@ public class Test03Activity extends AppCompatActivity {
         btn07.setOnClickListener(guguListener);
         btn08.setOnClickListener(guguListener);
         btn09.setOnClickListener(guguListener);
+        btnTotal.setOnClickListener(guguListener);
 
 
     }
@@ -89,10 +90,21 @@ public class Test03Activity extends AppCompatActivity {
         // 누적으로 추가되는걸 막기 위해 기존의 데이터를 전부 삭제.
         guguDatas.clear();
 
-        // 2단의 데이터들을 추가.
-        for (int i = 1 ; i <= 9 ; i++) {
-            guguDatas.add(new GuguData(dansu, i));
+        if (dansu == 0) {
+            // 2~9단까지 모두 추가.
+            for (int i=2 ; i<= 9 ; i++) {
+                for (int j=1; j<=9; j++) {
+                    guguDatas.add(new GuguData(i,j));
+                }
+            }
         }
+        else {
+            // 버튼이 눌린 단의 데이터들을 추가.
+            for (int i = 1 ; i <= 9 ; i++) {
+                guguDatas.add(new GuguData(dansu, i));
+            }
+        }
+
 
         //추가가 끝났으니 어댑터가 새로고침 하도록 명령
         mAdapter.notifyDataSetChanged();
