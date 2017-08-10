@@ -28,6 +28,7 @@
         android:text="구구단 2~9단 출력"/>
 
     <Button
+        android:id="@+id/test04Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="좌표 표현하기"/>
