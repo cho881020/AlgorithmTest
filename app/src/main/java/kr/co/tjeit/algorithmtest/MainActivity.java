@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     private android.widget.Button test01Btn;
     private Button test02Btn;
+    private Button test03Btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +37,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        test03Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, Test03Activity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void bindViews() {
 
+        this.test03Btn = (Button) findViewById(R.id.test03Btn);
         this.test02Btn = (Button) findViewById(R.id.test02Btn);
         this.test01Btn = (Button) findViewById(R.id.test01Btn);
     }
