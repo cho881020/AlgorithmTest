@@ -21,6 +21,7 @@
             <Button
                 android:id="@+id/btn02"
                 android:layout_width="0dp"
+                android:tag="2"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="2단"/>
@@ -30,6 +31,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="3"
                 android:text="3단"/>
 
             <Button
@@ -37,6 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="4"
                 android:text="4단"/>
 
             <Button
@@ -44,10 +47,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+
+                android:tag="5"
                 android:text="5단"/>
 
             <Button
                 android:id="@+id/btn06"
+
+                android:tag="6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -66,6 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:tag="7"
                 android:text="7단"/>
 
             <Button
@@ -73,6 +81,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+
+                android:tag="8"
                 android:text="8단"/>
 
             <Button
@@ -80,13 +90,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="9단"/>
+
+                android:tag="9"
+                android:text="9단" />
 
             <Button
                 android:id="@+id/btnTotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:tag="0"
                 android:text="전체"/>
 
         </LinearLayout>
