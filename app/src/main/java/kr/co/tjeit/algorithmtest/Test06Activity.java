@@ -31,8 +31,13 @@ public class Test06Activity extends BaseActivity {
     // 일반적인 프로그래밍에서는 Thread.
     // Thread 예시 -> 컴퓨터로 노래 / 게임 / 유튜브. => OS (Window)
     Handler mHandler = new Handler();
-    int remainMoney = 100000;
+    int remainMoney = 10000000;
+    long earnMoney = 0;
+    int[] myLottoNumber = {1, 4, 8, 27, 33, 42};
     int[] correctLottoNumber = new int[6];
+    int bonusNumber = 0;
+    private TextView earnMoneyTxt;
+    private TextView bonusNumberTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +100,34 @@ public class Test06Activity extends BaseActivity {
                     }
                 }
 
-//                숫자를 오름차순으로 정렬. => insertion sort
+//                숫자를 오름차순으로 정렬. => bubble sort
 
+                for (int i = correctLottoNumber.length; i > 0; i--) {
+                    for (int j = 0; j < i - 1; j++) {
+                        if (correctLottoNumber[j] > correctLottoNumber[j + 1]) {
+                            int temp = correctLottoNumber[j];
+                            correctLottoNumber[j] = correctLottoNumber[j + 1];
+                            correctLottoNumber[j + 1] = temp;
+                        }
+                    }
+                }
+
+//                보너스번호 생성.
+
+                while (true) {
+                    bonusNumber = (int) (Math.random() * 45) + 1;
+
+                    boolean isDupl = false;
+                    for (int i = 0; i < 6; i++) {
+                        if (bonusNumber == correctLottoNumber[i]) {
+                            isDupl = true;
+                        }
+                    }
+
+                    if (!isDupl) {
+                        break;
+                    }
+                }
 
 
                 okNum01.setText(correctLottoNumber[0]+"");
@@ -106,10 +137,60 @@ public class Test06Activity extends BaseActivity {
                 okNum05.setText(correctLottoNumber[4]+"");
                 okNum06.setText(correctLottoNumber[5]+"");
 
+                bonusNumberTxt.setText(bonusNumber+"");
+
+                // 번 돈을 계산하는 부분.
+
+                // 몇개의 숫자를 맞췄는지 카운팅.
+                int okNumberCount = 0;
+
+                for (int i = 0; i < 6; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        if (myLottoNumber[i] == correctLottoNumber[j]) {
+                            okNumberCount++;
+                        }
+                    }
+                }
+
+                // 맞춘 갯수에 따라 얼마를 벌었는지 계산.
+                if (okNumberCount == 6) {
+                    earnMoney += 2900000000L;
+                } else if (okNumberCount == 5) {
+
+                    // 숫자 5개를 맞췃을때는
+                    // 보너스번호의 유무에 따라 2등/3등 구별.
+
+                    boolean bonusOk = false;
+                    // 실제로 보너스를 맞췄는지 검사.
+                    for (int i=0 ; i < 6 ; i++ ) {
+                        if (bonusNumber == myLottoNumber[i]) {
+                            bonusOk = true;
+                        }
+                    }
+
+                    if (bonusOk) {
+                        earnMoney += 65000000L;
+                    }
+                    else {
+                        earnMoney += 1650000L;
+                    }
+
+                } else if (okNumberCount == 4) {
+                    earnMoney += 50000L;
+                } else if (okNumberCount == 3) {
+                    remainMoney += 5000L;
+                }
+
+                String earnMoneyStr = String.format(Locale.KOREA, "%,d원 획득!", earnMoney);
+                earnMoneyTxt.setText(earnMoneyStr);
 
                 // mHandler에게, doLottoRun을 다시 실행시켜 달라고 부탁.
                 // 1000원을 다시 쓰도록 만들자.
-                mHandler.post(doLottoRun);
+
+                if (okNumberCount < 6) {
+                    mHandler.post(doLottoRun);
+                }
+
             }
 
         }
@@ -137,8 +218,9 @@ public class Test06Activity extends BaseActivity {
 
     @Override
     public void bindViews() {
-
         this.startBtn = (Button) findViewById(R.id.startBtn);
+        this.earnMoneyTxt = (TextView) findViewById(R.id.earnMoneyTxt);
+        this.bonusNumberTxt = (TextView) findViewById(R.id.bonusNumberTxt);
         this.okNum06 = (TextView) findViewById(R.id.okNum06);
         this.okNum05 = (TextView) findViewById(R.id.okNum05);
         this.okNum04 = (TextView) findViewById(R.id.okNum04);
