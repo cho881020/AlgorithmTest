@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import kr.co.tjeit.algorithmtest.adapter.ChattingAdapter;
 import kr.co.tjeit.algorithmtest.data.ChattingData;
@@ -20,6 +21,18 @@ import kr.co.tjeit.algorithmtest.data.ChattingData;
 public class Test05Activity extends BaseActivity {
 
 //    1. 야구게임의 문제는 고정되어 있고, S/B 판별하는 로직 짜서
+
+    int questionNumber = 471; // 이숫자를 맞추는 로직을 짜보자.
+    // 문제 숫자가 바뀌더라도 대응가능한 채점 로직을 만들자.
+
+    int[] questionNumberArray = {4,7,1}; // 출제된 문제를 세자리 배열로 분할
+    // 한자리씩 비교하기에 편하게 하려고 만든 배열.
+
+    int strikeCount = 0; // 문제를 입력하면 계산되는 스트라이크의 개수
+    int ballCount = 0; // 문제를 입력하면 계산되는 볼의 개수.
+
+    int tryCount = 0;
+
 //    2. 사용자에게 몇S 몇B 채팅 메세지로 던져줌
 //    3. 몇번 시도했는지 세서, 사용자에게 "현재까지 %d회 시도했습니다." 메세지 전송
 //    4. 만약 3S 축하합니다! 클리어했습니다! => EditText 입력 / 전송 버튼 막는것.
@@ -77,8 +90,6 @@ public class Test05Activity extends BaseActivity {
 
         // 1. 전송버튼을 누르면 Toast로 "데이터를 입력합니다."
 //        Toast.makeText(mContext, "데이터를 입력합니다.", Toast.LENGTH_SHORT).show();
-        // 2. 전송버튼을 누르면 EditText의 내용을 비움.
-        inputEdt.setText("");
 
 
         // 5. 3자리의 숫자 까지만 입력을 받을 수 있게 EditText를 설정.
@@ -112,6 +123,69 @@ public class Test05Activity extends BaseActivity {
                 // 6. 숫자를 넣으면, 무조건 컴퓨터가 "확인했습니다." 답장해주는 시스템.
 
                 chattingDatas.add(new ChattingData(false, "확인했습니다."));
+
+//                7. 숫자를 넣으면, 몇S 몇B인지 계산해서 답장해주는 시스템.
+
+                // 스트라이크와 볼의 갯수를 초기화.
+                strikeCount = 0;
+                ballCount = 0;
+
+                // strikeCount, ballCount의 개수가 몇개인지 계산.
+
+                int inputNum = Integer.parseInt(inputEdt.getText().toString());
+
+                // 2. 전송버튼을 누르면 EditText의 내용을 비움.
+                inputEdt.setText("");
+
+                int[] inputArr = new int[3];
+
+                inputArr[0] = inputNum / 100;
+                inputArr[1] = inputNum % 100 / 10;
+                inputArr[2] = inputNum % 10;
+
+
+//                int index = 0;
+//                while (inputNum > 0) {
+//                    inputArr[index] = inputNum % 10;
+//                    inputNum /= 10;
+//                }
+
+//                inputArr 와 questionNumberArray를 비교하는 부분.
+
+                for (int i=0 ; i < 3; i++) {
+                    for (int j=0; j < 3 ; j++) {
+
+//                        inputArr[i] 와 questionNumberArray[j] 의 숫자가 같은지.
+
+                        if (inputArr[i] == questionNumberArray[j]) {
+                            // 스트라이크와 볼의 갯수를 판정
+
+                            // i와 j의 값 자체가 같다면, 위치가 같으므로
+                            // strike로 판정
+
+                            // 그렇지 않다면, 위치가 다르지만, 이미 숫자는 같은걸 확인했으니
+                            // ball 로 판정.
+
+                            if (i == j) {
+                                strikeCount++;
+                            }
+                            else {
+                                ballCount++;
+                            }
+
+                        }
+
+                    }
+                }
+
+                String resultStr = String.format(Locale.KOREA, "%d 스트라이크, %d 볼 입니다.", strikeCount, ballCount);
+                chattingDatas.add(new ChattingData(false, resultStr));
+
+//                tryCount를 활용하여, "%d번 시도했습니다." 메세지 던져주기.
+
+//                3S인 경우, "축하합니다. 클리어하셨습니다." 메세지를 던지고
+//                EditText와 버튼을 비활성화.
+
                 mAdapter.notifyDataSetChanged();
 
                 chattingListView.smoothScrollToPosition(mAdapter.getCount() - 1);
