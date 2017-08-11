@@ -33,5 +33,12 @@
         android:layout_height="wrap_content"
         android:text="좌표 표현하기"/>
 
+    <Button
+        android:id="@+id/test05Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="채팅형 숫자 야구 게임."/>
+
+
 
 </LinearLayout>
