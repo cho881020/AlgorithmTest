@@ -57,9 +57,9 @@
                 <TextView
                     android:id="@+id/cpuMessageTxt"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/opponent_message_content_radius_box"
-                    android:gravity="center"
+                    android:gravity="left|center_vertical"
                     android:padding="5dp"
                     android:text="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
                     android:textColor="#000000" />

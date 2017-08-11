@@ -3,6 +3,7 @@ package kr.co.tjeit.algorithmtest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -178,13 +179,30 @@ public class Test05Activity extends BaseActivity {
                     }
                 }
 
-                String resultStr = String.format(Locale.KOREA, "%d 스트라이크, %d 볼 입니다.", strikeCount, ballCount);
+//                tryCount를 활용하여, "%d번 시도했습니다." 메세지 던져주기.
+                tryCount++;
+
+                // 스트라이크 볼, 시도횟수까지 한번에 보여주기
+                String resultStr = String.format(Locale.KOREA, "%d 스트라이크, %d 볼 입니다." +
+                        "\n%d번 시도했습니다.", strikeCount, ballCount, tryCount);
                 chattingDatas.add(new ChattingData(false, resultStr));
 
-//                tryCount를 활용하여, "%d번 시도했습니다." 메세지 던져주기.
+
+                // 별개의 메세지로 시도횟수 띄우기
+//                String tryCountStr = String.format(Locale.KOREA, "%d번 시도했습니다.", tryCount);
+//                chattingDatas.add(new ChattingData(false, tryCountStr));
 
 //                3S인 경우, "축하합니다. 클리어하셨습니다." 메세지를 던지고
 //                EditText와 버튼을 비활성화.
+
+                if (strikeCount == 3) {
+                    chattingDatas.add(new ChattingData(false, "축하합니다. 클리어하셨습니다."));
+
+                    inputEdt.setEnabled(false);
+                    sendBtn.setEnabled(false);
+
+                }
+
 
                 mAdapter.notifyDataSetChanged();
 
@@ -212,8 +230,58 @@ public class Test05Activity extends BaseActivity {
 
         chattingListView.setAdapter(mAdapter);
 
+        makeQuestion();
+
     }
 
+
+    public void makeQuestion() {
+
+//        questionNumber 와 questionNumberArray
+//        문제를 랜덤으로 출제 하도록.
+
+
+
+//        1. 문제를 Math.Random -> 무작위 세자리 숫자. 100~999
+//            확인 : 471을 입력했을때 정답이 아닌걸로
+//            Log를 이용해 문제가 무엇으로 출시됬는지.
+
+        while (true) {
+            questionNumber = (int) (Math.random() * 900 + 100);
+
+            questionNumberArray[0] = questionNumber / 100;
+            questionNumberArray[1] = questionNumber % 100 / 10;
+            questionNumberArray[2] = questionNumber % 10;
+
+//        boolean checkZero = questionNumberArray[0] != 0 && questionNumberArray[1] != 0
+//                && questionNumberArray[2] !=0;
+
+            boolean checkZero = !(questionNumberArray[0] == 0 || questionNumberArray[1] == 0
+                    || questionNumberArray[2] == 0);
+
+            boolean checkDupl = !(questionNumberArray[0] == questionNumberArray[1]
+                    || questionNumberArray[1] == questionNumberArray[2]
+                    || questionNumberArray[0] == questionNumberArray[2]);
+
+
+//            Log.d("question", questionNumber+"");
+            if (checkZero && checkDupl ) {
+                break;
+            }
+
+        }
+
+
+//        Math.random => (0 <= x <1) * 900 :  100~999
+
+
+//        2. 출제된 문제에 제약조건. 조건이 안맞으면 다시 출제.
+//          1) 숫자에 0이 들어가면 안됨. 370 => 다시만들어라.
+//          2) 모든 자리의 숫자는 서로 달라야함. => 111, 112, 211, 121
+
+
+
+    }
 
 
     @Override

@@ -37,8 +37,13 @@
         android:id="@+id/test05Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="채팅형 숫자 야구 게임."/>
+        android:text="채팅형 숫자 야구 게임"/>
 
+    <Button
+        android:id="@+id/test06Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로또 시뮬레이터"/>
 
 
 </LinearLayout>
