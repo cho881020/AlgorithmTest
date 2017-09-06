@@ -45,5 +45,11 @@
         android:layout_height="wrap_content"
         android:text="로또 시뮬레이터"/>
 
+    <Button
+        android:id="@+id/test07Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GPS 샘플"/>
+
 
 </LinearLayout>

@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private Button test04Btn;
     private Button test05Btn;
     private Button test06Btn;
+    private Button test07Btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +75,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        test07Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GPSSampleActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
     private void bindViews() {
+        this.test07Btn = (Button) findViewById(R.id.test07Btn);
         this.test06Btn = (Button) findViewById(R.id.test06Btn);
         this.test05Btn = (Button) findViewById(R.id.test05Btn);
         this.test04Btn = (Button) findViewById(R.id.test04Btn);
